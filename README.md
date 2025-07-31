@@ -1,2 +1,1 @@
-# IloveWork
-IloveWork
+此项目仅供娱乐，
