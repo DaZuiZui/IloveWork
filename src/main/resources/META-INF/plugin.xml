@@ -1,0 +1,24 @@
+<idea-plugin>
+    <id>com.example.helloworld</id>
+    <name>HiDazui</name>
+    <vendor email="y51288033@outlook.com" url="https://github.com/DaZuiZui">LoveDaZui</vendor>
+
+    <description><![CDATA[
+    A simple plugin that shows "Hello World" message.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <action id="HelloWorldAction"
+                class="com.example.helloworld.HelloWorldAction"
+                text="Hello World"
+                description="Show Hello World message">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
