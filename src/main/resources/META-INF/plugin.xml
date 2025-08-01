@@ -14,20 +14,20 @@
     </extensions>
 
     <actions>
-        <group id="HelloWorldGroup" text="Hello World" description="Hello World相关功能" popup="true">
+        <group id="HelloWorldGroup" text="DJ小嘴弟爱上班" description="Hello World相关功能" popup="true">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
 
             <action id="ShowMessageAction"
                     class="com.example.helloworld.HelloWorldAction"
-                    text="SayHi"
+                    text="Say Hi to FC work"
                     description="Show Hello World message"/>
             <action id="WorkSettingsAction"
                     class="com.example.helloworld.WorkSettingsAction"
-                    text="工作设置"
+                    text="setting"
                     description="设置工资和工作时间"/>
             <action id="ShowWorkDataAction"
                     class="com.example.helloworld.ShowWorkDataAction"
-                    text="查看设置"
+                    text="Wallet"
                     description="查看当前保存的工作设置"/>
         </group>
     </actions>
