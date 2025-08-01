@@ -5,6 +5,10 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
 public class WorkSettingsAction extends AnAction {
 
     @Override
@@ -20,16 +24,16 @@ public class WorkSettingsAction extends AnAction {
             String morningTime = dialog.getMorningTime();
             String afternoonTime = dialog.getAfternoonTime();
             String nightTime = dialog.getNightTime();
-            
+
             // 保存数据到静态变量
             WorkSettingsManager.setMonthlySalary(salary);
             WorkSettingsManager.setMorningTime(morningTime);
             WorkSettingsManager.setAfternoonTime(afternoonTime);
             WorkSettingsManager.setNightTime(nightTime);
-            
+
             // 计算日工资
             double dailySalary = WorkSettingsManager.getDailySalary();
-            
+
             // 在控制台打印输入的内容
             System.out.println("=== 工作设置 ===");
             System.out.println("月工资: " + salary + " 元");
@@ -41,4 +45,5 @@ public class WorkSettingsAction extends AnAction {
             System.out.println("==================");
         }
     }
+
 }

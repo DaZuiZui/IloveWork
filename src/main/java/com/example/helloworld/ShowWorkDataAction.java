@@ -3,6 +3,7 @@ package com.example.helloworld;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
 import org.jetbrains.annotations.NotNull;
 
 public class ShowWorkDataAction extends AnAction {
@@ -13,18 +14,34 @@ public class ShowWorkDataAction extends AnAction {
         if (project == null) return;
 
         if (!WorkSettingsManager.hasData()) {
-            System.out.println("=== 当前工作设置 ===");
-            System.out.println("还没有设置工作数据，请先进行设置！");
-            System.out.println("==================");
+            Messages.showInfoMessage(project,
+                    "还没有设置工作数据，请先进行设置！",
+                    "当前工作设置");
             return;
         }
-        
-        System.out.println("=== 当前工作设置 ===");
-        System.out.println("月工资: " + WorkSettingsManager.getMonthlySalary() + " 元");
-        System.out.println("日工资: " + String.format("%.2f", WorkSettingsManager.getDailySalary()) + " 元");
-        System.out.println("上午工作时间: " + WorkSettingsManager.getMorningTime());
-        System.out.println("下午工作时间: " + WorkSettingsManager.getAfternoonTime());
-        System.out.println("夜间工作时间: " + WorkSettingsManager.getNightTime());
-        System.out.println("==================");
+
+        long totalMinutes = WorkSettingsManager.getTotalWorkMinutes();
+        double earned = WorkSettingsManager.getEarnedMoney();
+
+        String message = String.format(
+                "=== 当前工作设置 ===\n" +
+                        "月工资: %s 元\n" +
+                        "日工资: %.2f 元\n" +
+                        "上午工作时间: %s\n" +
+                        "下午工作时间: %s\n" +
+                        "夜间工作时间: %s\n" +
+                        "总工作分钟数: %d 分钟\n" +
+                        "已赚金额: %.2f 元\n" +
+                        "==================",
+                WorkSettingsManager.getMonthlySalary(),
+                WorkSettingsManager.getDailySalary(),
+                WorkSettingsManager.getMorningTime(),
+                WorkSettingsManager.getAfternoonTime(),
+                WorkSettingsManager.getNightTime(),
+                totalMinutes,
+                earned
+        );
+
+        Messages.showInfoMessage(project, message, "当前工作设置");
     }
-} 
+}
