@@ -9,6 +9,6 @@ public class HelloWorldAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        Messages.showInfoMessage(e.getProject(), "Hello World!", "Hello World Plugin");
+        Messages.showInfoMessage(e.getProject(), "Fucking company，Fucking work!", "fucking everything");
     }
-} 
+}

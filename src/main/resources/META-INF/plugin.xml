@@ -29,6 +29,22 @@
                     class="com.example.helloworld.ShowWorkDataAction"
                     text="Wallet"
                     description="查看当前保存的工作设置"/>
+            <action id="test1"
+                    class="com.example.helloworld.HelloWorldAction"
+                    text="给XXX的一个XXX"
+                    description="Boss"/>
+            <action id="test2"
+                    class="com.example.helloworld.HelloWorldAction"
+                    text="给XXX一个XXX"
+                    description="Boss"/>
+            <action id="test3"
+                    class="com.example.helloworld.HelloWorldAction"
+                    text="给XXX一个XX"
+                    description="Boss"/>
+            <action id="AboutDazui"
+                    class="com.example.helloworld.HelloWorldAction"
+                    text="About DJ小嘴弟 Github"
+                    description="前往嘴弟 Github"/>
         </group>
     </actions>
 
