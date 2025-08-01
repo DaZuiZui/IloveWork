@@ -70,22 +70,7 @@ public class WorkSettingsManager {
 
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
-    // 计算单个时间段的分钟数，比如 "09:00-12:00"
-    public static long calculateMinutes(String timeRange) {
-        if (timeRange == null || !timeRange.contains("-")) return 0;
-        try {
-            String[] parts = timeRange.split("-");
-            LocalTime start = LocalTime.parse(parts[0].trim(), TIME_FORMATTER);
-            LocalTime end = LocalTime.parse(parts[1].trim(), TIME_FORMATTER);
-            if (end.isBefore(start)) {
-                // 如果结束时间比开始时间早，认为是跨天，按24小时制算
-                end = end.plusHours(24);
-            }
-            return ChronoUnit.MINUTES.between(start, end);
-        } catch (Exception e) {
-            return 0;
-        }
-    }
+
 
     // 计算总工作分钟数
     public static long getTotalWorkMinutes() {
@@ -105,5 +90,54 @@ public class WorkSettingsManager {
     // 计算当前工作分钟数 * 每分钟工资 = 赚了多少钱
     public static double getEarnedMoney() {
         return getTotalWorkMinutes() * getSalaryPerMinute();
+    }
+
+
+    // 计算单个时间段的总分钟数
+    public static long calculateMinutes(String timeRange) {
+        if (timeRange == null || !timeRange.contains("-")) return 0;
+        try {
+            String[] parts = timeRange.split("-");
+            LocalTime start = LocalTime.parse(parts[0].trim(), TIME_FORMATTER);
+            LocalTime end = LocalTime.parse(parts[1].trim(), TIME_FORMATTER);
+            if (end.isBefore(start)) {
+                end = end.plusHours(24);
+            }
+            return ChronoUnit.MINUTES.between(start, end);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    // 计算当前时间和时间段的重叠分钟数（即已经工作的分钟数）
+    public static long calculateWorkedMinutes(String timeRange, LocalTime now) {
+        if (timeRange == null || !timeRange.contains("-")) return 0;
+        try {
+            String[] parts = timeRange.split("-");
+            LocalTime start = LocalTime.parse(parts[0].trim(), TIME_FORMATTER);
+            LocalTime end = LocalTime.parse(parts[1].trim(), TIME_FORMATTER);
+            if (end.isBefore(start)) {
+                end = end.plusHours(24);
+            }
+            if (now.isBefore(start)) {
+                return 0;
+            } else if (now.isAfter(end) || now.equals(end)) {
+                // 当前时间晚于结束时间，全部时间段算满
+                return ChronoUnit.MINUTES.between(start, end);
+            } else {
+                // 当前时间在时间段内，计算从start到now的分钟数
+                return ChronoUnit.MINUTES.between(start, now);
+            }
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    // 计算今天截止目前，已工作的分钟数
+    public static long getWorkedMinutesSoFar() {
+        LocalTime now = LocalTime.now();
+        return calculateWorkedMinutes(getMorningTime(), now)
+                + calculateWorkedMinutes(getAfternoonTime(), now)
+                + calculateWorkedMinutes(getNightTime(), now);
     }
 }

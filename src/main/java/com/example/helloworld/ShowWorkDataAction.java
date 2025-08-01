@@ -16,21 +16,24 @@ public class ShowWorkDataAction extends AnAction {
         if (!WorkSettingsManager.hasData()) {
             Messages.showInfoMessage(project,
                     "还没有设置工作数据，请先进行设置！",
-                    "当前工作设置");
+                    "work info");
             return;
         }
 
         long totalMinutes = WorkSettingsManager.getTotalWorkMinutes();
-        double earned = WorkSettingsManager.getEarnedMoney();
+        long workedMinutes = WorkSettingsManager.getWorkedMinutesSoFar();
+        double salaryPerMinute = WorkSettingsManager.getDailySalary() / totalMinutes;  // 日工资除以总分钟数
+        double earnedMoney = workedMinutes * salaryPerMinute;
 
         String message = String.format(
-                "=== 当前工作设置 ===\n" +
+                "=== 这点B班上的你妈的不值得 fucking ===\n" +
                         "月工资: %s 元\n" +
                         "日工资: %.2f 元\n" +
                         "上午工作时间: %s\n" +
                         "下午工作时间: %s\n" +
                         "夜间工作时间: %s\n" +
                         "总工作分钟数: %d 分钟\n" +
+                        "目前工作分钟数: %d 分钟\n" +
                         "已赚金额: %.2f 元\n" +
                         "==================",
                 WorkSettingsManager.getMonthlySalary(),
@@ -39,7 +42,8 @@ public class ShowWorkDataAction extends AnAction {
                 WorkSettingsManager.getAfternoonTime(),
                 WorkSettingsManager.getNightTime(),
                 totalMinutes,
-                earned
+                workedMinutes,
+                earnedMoney
         );
 
         Messages.showInfoMessage(project, message, "当前工作设置");
